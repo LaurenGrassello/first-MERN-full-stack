@@ -1,12 +1,25 @@
 import Main from './views/Main';
+import Detail from './views/Detail';
 import React from 'react';
 import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
-    <Main />
-    </div>
+    <BrowserRouter>
+      <Switch>
+
+      <Route exact path='/'>
+        <Main />
+      </Route>
+      
+        <Route exact path='/product/:id'>
+          <Detail />
+        </Route>
+
+
+      </Switch>
+    </BrowserRouter >
   );
 }
 

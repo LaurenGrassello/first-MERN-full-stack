@@ -1,37 +1,40 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export default () => {
-    const [title, setTitle] = useState('');
-    const [price, setPrice] = useState('');
-    const [description, setDescription] = useState('');
+const ProductForm = (props) => {
+    const [title, setTitle] = useState('')
+    const [price, setPrice] = useState('')
+    const [description, setDescription] = useState('')
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post('http://localhost:8000/api/product', {
-            title,
-            price,
-            description
-        })
-            .then(res => console.log('Response', res))
+        e.preventDefault()
+        axios.post(`http://localhost:8000/api/product`, {title, price, description})
+            .then(res=> {
+                setTitle('')
+                setPrice('')
+                setDescription('')
+            })
             .catch(err => console.log('Error', err))
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="productForm" onSubmit={handleSubmit}>
+        <h3>Product Manager</h3>
             <p>
-                <label>Title</label>
+                <label className="form-label">Title: </label>
                 <input type='text' onChange={e => setTitle(e.target.value)} value={title} />
             </p>
             <p>
-                <label>Price</label>
-                <input type='text' onChange={e => setPrice(e.target.value)} value={price} />
+                <label>Price: </label>
+                <input type='number' onChange={e => setPrice(e.target.value)} value={price} />
             </p>
             <p>
-                <label>Descirption</label>
+                <label className="desc">Description: </label>
                 <input type='text' onChange={e => setDescription(e.target.value)} value={description} />
             </p>
-            <input type='submit' />
+            <input className="btn btn-dark" type='submit' />
         </form>
     )
 }
+
+export default ProductForm;
