@@ -8,3 +8,14 @@
   padding: 10px;
 }
 
+.deleteBtn{
+  background-color: white;
+  border-style: none;
+  margin: 5px;
+  text-decoration: underline;
+  color: rgb(0, 174, 255);
+}
+
+.linkItem{
+  color: black;
+}

@@ -3,19 +3,24 @@ import React, { useEffect, useState } from 'react';
 import ProductForm from '../components/ProductForm'
 import ProductList from '../components/ProductList';
 
-const Main = (props) => {
-    const [product, setProduct] = useState([])
+const Main = () => {
+    const [product, setProduct] = useState()
+    const [refresh, setRefresh] = useState(false)
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/product')
-            .then(res => setProduct(res.data.product))
+            .then(res =>setProduct(res.data))
             .catch(err => console.log("Something went wrong", err))
-    }, [])
+    }, [refresh])
+
+    const reload = () =>{
+        setRefresh(!refresh)
+    }
 
     return (
         <div>
-            <ProductForm />
-            <ProductList product={product} />
+            <ProductForm reload={reload} />
+            {product && <ProductList reload={reload} product={product} />}
         </div>
     )
 }

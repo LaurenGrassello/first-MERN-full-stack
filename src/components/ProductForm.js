@@ -5,6 +5,7 @@ const ProductForm = (props) => {
     const [title, setTitle] = useState('')
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
+    const {reload} = props
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -13,6 +14,7 @@ const ProductForm = (props) => {
                 setTitle('')
                 setPrice('')
                 setDescription('')
+                reload()
             })
             .catch(err => console.log('Error', err))
     }
@@ -26,7 +28,7 @@ const ProductForm = (props) => {
             </p>
             <p>
                 <label>Price: </label>
-                <input type='number' onChange={e => setPrice(e.target.value)} value={price} />
+                <input type='text' onChange={e => setPrice(e.target.value)} value={price} />
             </p>
             <p>
                 <label className="desc">Description: </label>

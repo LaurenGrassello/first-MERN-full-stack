@@ -1,5 +1,6 @@
 import Main from './views/Main';
 import Detail from './views/Detail';
+import Update from './views/Update';
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
@@ -16,6 +17,10 @@ function App() {
         <Route exact path='/product/:id'>
           <Detail />
         </Route>
+
+        <Route exact path='/product/:id/edit'>
+        <Update />
+      </Route>
 
 
       </Switch>
