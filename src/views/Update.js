@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
 import axios from 'axios'
 import ProductForm from '../components/ProductForm'
 import DeleteButton from '../components/DeleteButton'
@@ -38,6 +38,7 @@ const Update = (props) => {
 
             <DeleteButton productId={product._id} 
             successCallback={()=> history.push('/')} />
+            <Link to="/">Home</Link>
             </>
         )}
         </div>
