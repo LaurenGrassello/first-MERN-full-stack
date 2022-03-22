@@ -1,44 +1,29 @@
-import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom'
+import DeleteButton from './DeleteButton';
 
 
 const ProductList = (props) => {
 
-    const deleteProduct = (id) => {
-        axios.delete(`http://localhost:8000/api/product/${id}`)
-            .then(res => {
-                props.reload()
-            })
-            .catch(err => console.error(err))
-    }
-
     return (
         <div className="productList">
             <h3>All Products</h3>
-            {
-                props.product ? (
-                    <>
-                        <table>
-                            <tbody>
-                                {
-                                    props.product.map((list, i) => (
-                                        <tr key={i}>
-                                            <td>
-                                                <Link className='linkItem' to={`/product/${list._id}`}>{list.title}</Link>
-                                            </td>
-                                            <td><button className='deleteBtn' onClick={(e) => { deleteProduct(list._id) }}>Delete</button></td>
-                                        </tr>
-                                    ))
-                                }
-                            </tbody>
-                        </table>
-                    </>
-                ) :
-                    <>
-                        <h3>There was an error</h3>
-                    </>
-            }
+            {props.product.map((product, i) =>{
+                return(
+                    <p key={i}>
+                    <Link to={'/product/' + product._id}>
+                    {product.title}
+                    </Link>
+                    |
+                    <Link to={'/product/' + product._id + '/edit'}>
+                    Edit
+                    </Link>
+                    |
+                    <DeleteButton productId={product._id} 
+                    successCallback={()=>props.removeFromDom(product._id)} />
+                    </p>
+                )
+            })}
         </div>
     )
 }

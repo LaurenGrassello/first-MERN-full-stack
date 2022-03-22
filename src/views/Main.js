@@ -4,23 +4,36 @@ import ProductForm from '../components/ProductForm'
 import ProductList from '../components/ProductList';
 
 const Main = () => {
-    const [product, setProduct] = useState()
-    const [refresh, setRefresh] = useState(false)
+    const [product, setProduct] = useState([])
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/product')
-            .then(res =>setProduct(res.data))
-            .catch(err => console.log("Something went wrong", err))
-    }, [refresh])
+            .then(res =>{
+            setProduct(res.data) 
+            setLoaded(true);
+        })
+    }, [])
 
-    const reload = () =>{
-        setRefresh(!refresh)
+    const removeFromDom = id => {
+        setProduct(product.filter(product => product._id !== id))
+    }
+
+    const createProduct = p => {
+        axios.post('http://localhost:8000/api/product', p)
+        .then(res=>{
+            setProduct([...product, res.data])
+        })
     }
 
     return (
         <div>
-            <ProductForm reload={reload} />
-            {product && <ProductList reload={reload} product={product} />}
+
+            <ProductForm  handleSubmitProp = {createProduct} 
+            initialTitle=" " initialPrice=" " initialDescription=" " />
+    
+            {loaded && <ProductList product={product} removeFromDom={removeFromDom} />}
+            
         </div>
     )
 }
